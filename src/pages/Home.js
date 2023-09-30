@@ -16,6 +16,8 @@ import feature08 from "../assets/feature08.png";
 import base from "../assets/base.svg";
 import opensea from "../assets/opensea.png";
 import superfluid from "../assets/superfluid.svg";
+import rightArrow from "../assets/right-arrow.svg";
+import bg1 from "../assets/header-bg-1.png";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -51,11 +53,7 @@ function Home() {
           </div>
         </div>
         <div className="hero__image">
-          <img
-            decoding="async"
-            src="https://alethemes.com/onchain/wp-content/uploads/sites/109/2022/12/header-bg-1.png"
-            alt="Base NFT"
-          />
+          <img decoding="async" src={bg1} alt="Base NFT" />
         </div>
       </section>
       <section className="second-section">
@@ -114,7 +112,7 @@ function Home() {
           </div>
           <div class="products__footer">
             <a
-              href="https://alethemes.com/onchain/shop/"
+              href="/explore/base/all"
               rel="follow"
               target="_self"
               class="products__btn main-btn"
@@ -123,11 +121,7 @@ function Home() {
                 <p>Explore all collections</p>
               </div>
               <div class="main-btn__icon">
-                <img
-                  decoding="async"
-                  src="https://alethemes.com/onchain/wp-content/themes/onchain/assets/images/arrow-right.svg"
-                  alt="category"
-                />
+                <img decoding="async" src={rightArrow} alt="category" />
               </div>
             </a>
           </div>

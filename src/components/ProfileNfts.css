@@ -26,6 +26,7 @@
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
+  margin: 10px 0;
 }
 
 .listing-buttons {
@@ -151,9 +152,7 @@
   width: 10%;
   animation: move 3s linear infinite;
 }
-.product-content p {
-  margin: 0;
-}
+
 .sold-nfts .value.progress-title {
   margin-left: 10px;
   margin-top: 10px;
@@ -170,7 +169,17 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-
+.status-bar {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 @keyframes move {
   0% {
     left: 10%;
