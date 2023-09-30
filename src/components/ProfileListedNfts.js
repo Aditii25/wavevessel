@@ -12,13 +12,9 @@ function ProfileListedNfts() {
       <section className="container nft-bg">
         <div className="explore-nfts">
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft1 }}
-            >
+            <div className="product_image">
               <img src={nft1} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
@@ -35,13 +31,9 @@ function ProfileListedNfts() {
             </div>
           </div>
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft2 }}
-            >
+            <div className="product_image">
               <img src={nft2} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
@@ -58,13 +50,9 @@ function ProfileListedNfts() {
             </div>
           </div>
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft3 }}
-            >
+            <div className="product_image">
               <img src={nft3} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
@@ -81,13 +69,9 @@ function ProfileListedNfts() {
             </div>
           </div>
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft4 }}
-            >
+            <div className="product_image">
               <img src={nft4} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
@@ -104,13 +88,9 @@ function ProfileListedNfts() {
             </div>
           </div>
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft2 }}
-            >
+            <div className="product_image">
               <img src={nft2} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
@@ -127,13 +107,9 @@ function ProfileListedNfts() {
             </div>
           </div>
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft1 }}
-            >
+            <div className="product_image">
               <img src={nft1} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
               <p className="nft-title">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,

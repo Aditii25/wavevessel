@@ -11,15 +11,14 @@ function ProfileAllNfts() {
       <section className="container">
         <div className="explore-nfts">
           <div className="nft-item">
-            <Link
-              className="product_image"
-              to="/shop/product"
-              state={{ nft_image: nft1 }}
-            >
+            <div className="product_image">
               <img src={nft1} alt="" decoding="async" loading="lazy" />
-            </Link>
+            </div>
             <div className="product-content">
-              <p>Hello</p>
+              <p className="nft-title">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+                in.
+              </p>
               <p>Hello</p>
             </div>
           </div>
@@ -28,7 +27,10 @@ function ProfileAllNfts() {
               <img src={nft2} alt="" decoding="async" loading="lazy" />
             </div>
             <div className="product-content">
-              <p>Hello</p>
+              <p className="nft-title">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptates, id.
+              </p>
               <p>Hello</p>
             </div>
           </div>
@@ -37,7 +39,10 @@ function ProfileAllNfts() {
               <img src={nft3} alt="" decoding="async" loading="lazy" />
             </div>
             <div className="product-content">
-              <p>Hello</p>
+              <p className="nft-title">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam,
+                quaerat?
+              </p>
               <p>Hello</p>
             </div>
           </div>
@@ -46,7 +51,10 @@ function ProfileAllNfts() {
               <img src={nft4} alt="" decoding="async" loading="lazy" />
             </div>
             <div className="product-content">
-              <p>Hello</p>
+              <p className="nft-title">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
+                labore.
+              </p>
               <p>Hello</p>
             </div>
           </div>

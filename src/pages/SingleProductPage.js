@@ -6,7 +6,7 @@ import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
 import nft4 from "../assets/nft4.png";
 import { Link } from "react-router-dom";
-
+import rightArrow from "../assets/right-arrow.svg";
 function SingleProductPage() {
   return (
     <div>
@@ -148,24 +148,20 @@ function SingleProductPage() {
               </div>
             </div>
           </div>
-          <div class="products__footer">
-            <a
-              href="https://alethemes.com/onchain/shop/"
+          <div className="products__footer">
+            <Link
+              href="/explore/base/all"
               rel="follow"
               target="_self"
-              class="products__btn main-btn"
+              className="products__btn main-btn"
             >
-              <div class="main-btn__name">
+              <div className="main-btn__name">
                 <p>Explore all NFTs</p>
               </div>
-              <div class="main-btn__icon">
-                <img
-                  decoding="async"
-                  src="https://alethemes.com/onchain/wp-content/themes/onchain/assets/images/arrow-right.svg"
-                  alt="category"
-                />
+              <div className="main-btn__icon">
+                <img decoding="async" src={rightArrow} alt="category" />
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </section>

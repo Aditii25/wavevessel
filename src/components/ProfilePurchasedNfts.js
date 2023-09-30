@@ -13,13 +13,9 @@ function ProfilePurchasedNfts() {
         <div className="explore-nfts">
           <div className="nft-item">
             <div className="nft-item-inside-one">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft1 }}
-              >
+              <div className="product_image">
                 <img src={nft3} alt="" decoding="async" loading="lazy" />
-              </Link>
+              </div>
               <div className="product-content ">
                 <div className="product-content-sections">
                   <p className="title">Name</p>
@@ -67,13 +63,9 @@ function ProfilePurchasedNfts() {
           </div>{" "}
           <div className="nft-item">
             <div className="nft-item-inside-one">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft4 }}
-              >
+              <div className="product_image">
                 <img src={nft4} alt="" decoding="async" loading="lazy" />
-              </Link>
+              </div>
               <div className="product-content ">
                 <div className="product-content-sections">
                   <p className="title">Name</p>
