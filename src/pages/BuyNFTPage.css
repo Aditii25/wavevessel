@@ -1,0 +1,126 @@
+.buy-nft-page-parent {
+  width: 100%;
+  padding-bottom: 100px;
+}
+.buy-nft-page {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.buy-nft-left-parent {
+  flex: 1;
+  min-height: 500px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 20px;
+  border-radius: 24px;
+  padding: 10px;
+}
+.buy-nft-right-parent {
+  border-radius: 24px;
+  flex: 1;
+  min-height: 500px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 20px;
+}
+
+.buy-nft-page-parent .nft-owner {
+  margin: 20px 0;
+}
+.buy-nft-page-parent .nft-details h2 {
+  font-size: 1.2rem;
+}
+
+.buy-nft-page-parent .nft-owner span.address {
+  font-size: 1.2rem;
+}
+.buy-nft-page-parent .nft-image {
+  /* width: 100%; */
+  max-width: none;
+  margin-right: 0;
+}
+.buy-nft-page-parent .nft-image img {
+  width: 100%;
+}
+
+.buy_nft_fields {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.buy_nft_field_item {
+  margin-bottom: 30px;
+}
+
+.buy_nft_field_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.buy_nft_field_title .field_title {
+  padding: 0px;
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: 0.15px;
+  color: inherit;
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.field-sub-title {
+  font-size: 14px;
+  font-weight: 400;
+}
+.buy_nft_field_input {
+  border: 1px solid rgb(45, 45, 45);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: 0.15px;
+}
+.transaction-err .buy_nft_field_input {
+  font-size: 1rem;
+  background-color: rgb(242, 104, 91, 0.08);
+  color: rgb(242, 104, 91);
+  border: 1px solid rgb(242, 104, 91);
+}
+.field_info > svg {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  fill: rgb(255, 255, 255, 0.5);
+  border-radius: 100px;
+  padding: 5px;
+}
+.field_info > svg:hover {
+  /* background-color: #000; */
+  fill: #dffe00;
+}
+
+.field_item_input {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+.field_item_input:focus {
+  outline: none;
+}
+.last_item {
+  margin-top: 50px;
+}

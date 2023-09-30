@@ -19,6 +19,7 @@ import superfluid from "../assets/superfluid.svg";
 import rightArrow from "../assets/right-arrow.svg";
 import bg1 from "../assets/header-bg-1.png";
 import { Link } from "react-router-dom";
+import ShortExploreAllNfts from "../components/ShortExploreAllNfts";
 
 function Home() {
   return (
@@ -56,77 +57,7 @@ function Home() {
           <img decoding="async" src={bg1} alt="Base NFT" />
         </div>
       </section>
-      <section className="second-section">
-        <div className="container">
-          <div>
-            <div className="second-title">
-              <p>COLLECTIONS</p>
-            </div>
-            <div className="second-main-title">
-              <p>
-                Explore <span>NFTs</span>
-              </p>
-            </div>
-          </div>
-          <div className="explore-nfts">
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft1 }}
-              >
-                <img src={nft1} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft2} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft3} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft4} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-          </div>
-          <div class="products__footer">
-            <a
-              href="/explore/base/all"
-              rel="follow"
-              target="_self"
-              class="products__btn main-btn"
-            >
-              <div class="main-btn__name">
-                <p>Explore all collections</p>
-              </div>
-              <div class="main-btn__icon">
-                <img decoding="async" src={rightArrow} alt="category" />
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
+      <ShortExploreAllNfts />
       <section className="powered-by">
         <div className="powered-by-main-title">
           <p>

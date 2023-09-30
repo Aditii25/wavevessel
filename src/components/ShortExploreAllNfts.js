@@ -1,37 +1,14 @@
 import React from "react";
-import rocket from "../assets/rocket.png";
 import nft1 from "../assets/nft1.png";
 import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
 import nft4 from "../assets/nft4.png";
 import { Link } from "react-router-dom";
+import rightArrow from "../assets/right-arrow.svg";
 
-function AllNFTExplore() {
+function ShortExploreAllNfts() {
   return (
     <div>
-      <div className="single_product">
-        <div className="first_heading">
-          <section className="container">
-            <div className="first_wrapper">
-              <div className="first_content">
-                <div className="first_title">
-                  <p>Explore </p>
-                </div>
-                <div className="first_subtitle">
-                  <p>
-                    Explore a World of Digital Possibilities, Where You Can
-                    Discover, Collect, and Own Unique Digital Treasures
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="first_image">
-              <img src={rocket} alt="contact" />
-              <div className="first_object circle"></div>
-            </div>
-          </section>
-        </div>
-      </div>
       <section className="second-section single-product-explore-nfts">
         <div className="container">
           <div>
@@ -164,4 +141,4 @@ function AllNFTExplore() {
   );
 }
 
-export default AllNFTExplore;
+export default ShortExploreAllNfts;

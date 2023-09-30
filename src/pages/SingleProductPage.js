@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SingleProduct.css";
 import contact_img from "../assets/contact_image.png";
 import nft1 from "../assets/nft1.png";
-import nft2 from "../assets/nft2.png";
-import nft3 from "../assets/nft3.png";
-import nft4 from "../assets/nft4.png";
+
 import { Link } from "react-router-dom";
 import rightArrow from "../assets/right-arrow.svg";
+import ShortExploreAllNfts from "../components/ShortExploreAllNfts";
+
 function SingleProductPage() {
   return (
     <div>
@@ -60,9 +60,12 @@ function SingleProductPage() {
                       ETH
                     </span>
                   </h1>
-                  <div className="buy-nft-parent">
+                  <Link
+                    to={`/base/purchase/nft/base/5/0x32cff5c2a7233097efe3e8dc708d1df141780d69`}
+                    className="buy-nft-parent"
+                  >
                     <span className="buy-nft">Buy Now With Superfluid</span>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -94,77 +97,7 @@ function SingleProductPage() {
           </section>
         </div>
       </div>
-      <section className="second-section single-product-explore-nfts">
-        <div className="container">
-          <div>
-            <div className="second-title">
-              <p>COLLECTIONS</p>
-            </div>
-            <div className="second-main-title">
-              <p>
-                Explore <span>NFTs</span>
-              </p>
-            </div>
-          </div>
-          <div className="explore-nfts">
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft1 }}
-              >
-                <img src={nft1} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft2} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft3} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft4} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p>Hello</p>
-                <p>Hello</p>
-              </div>
-            </div>
-          </div>
-          <div className="products__footer">
-            <Link
-              href="/explore/base/all"
-              rel="follow"
-              target="_self"
-              className="products__btn main-btn"
-            >
-              <div className="main-btn__name">
-                <p>Explore all NFTs</p>
-              </div>
-              <div className="main-btn__icon">
-                <img decoding="async" src={rightArrow} alt="category" />
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ShortExploreAllNfts />
     </div>
   );
 }
