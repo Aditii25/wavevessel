@@ -1,7 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PopupForEditUnlist.css";
+import { ethers } from "ethers";
+import contractAbi from "../contract/PurchaseNFTOverTime.json";
 
 function PopupForEditUnlist(props) {
+  const [nftPrice, setnftPrice] = useState(props.showPopup.price);
+
+  const EditListing = async (nftId, nftAddress) => {
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        console.log(process.env.REACT_APP_CONTRACT_ADDRESS);
+
+        const contract = new ethers.Contract(
+          process.env.REACT_APP_CONTRACT_ADDRESS,
+          contractAbi.abi,
+          signer
+        );
+        console.log(contract);
+        const ethAmount = nftPrice; // Replace this with the amount of Ether you want to convert
+
+        // Convert ETH to Wei
+        const weiAmount = ethers.utils.parseEther(ethAmount.toString());
+        console.log(nftId, weiAmount.toString(), nftAddress);
+        const tx = await contract.editSale(
+          "5000000000000000",
+          nftId,
+          nftAddress
+        );
+        await tx.wait();
+        console.log("Edited");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const cancelListing = async (nftId, nftAddress) => {
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        console.log(process.env.REACT_APP_CONTRACT_ADDRESS);
+
+        const contract = new ethers.Contract(
+          process.env.REACT_APP_CONTRACT_ADDRESS,
+          contractAbi.abi,
+          signer
+        );
+        console.log(contract);
+
+        const tx = await contract.cancelSale(nftId, nftAddress);
+        await tx.wait();
+        console.log("Edited");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div class="popup-overlay">
@@ -22,7 +82,10 @@ function PopupForEditUnlist(props) {
                 <input
                   type="text"
                   className="popup-input"
-                  defaultValue={props.showPopup.price}
+                  defaultValue={nftPrice}
+                  onChange={(e) => {
+                    setnftPrice(e.target.value);
+                  }}
                 />
               </div>
             ) : null}
@@ -33,15 +96,19 @@ function PopupForEditUnlist(props) {
                   ? "edit-button"
                   : "unlist-button"
               }
-              onClick={() =>
-                props.setShowPopup({
-                  show: false,
-                  price: "",
-                  type: "",
-                  tokenAddress: "",
-                  tokenId: "",
-                })
-              }
+              onClick={() => {
+                if (props.showPopup.type === "edit") {
+                  EditListing(
+                    props.showPopup.tokenId,
+                    props.showPopup.tokenAddress
+                  );
+                } else if (props.showPopup.type === "unlist") {
+                  cancelListing(
+                    props.showPopup.tokenId,
+                    props.showPopup.tokenAddress
+                  );
+                }
+              }}
             >
               {props.showPopup && props.showPopup.type === "edit"
                 ? "Save"

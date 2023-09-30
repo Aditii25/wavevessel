@@ -16,7 +16,12 @@ function Navbar() {
             <span>Wave Vessel</span>
           </Link>
           <div className="button-container">
-            {address ? <a href="/dashboard">Dashboard</a> : null}
+            <Link to="/explore/base/all">Explore</Link>
+            {address ? (
+              <>
+                <Link to="/dashboard">Dashboard</Link>
+              </>
+            ) : null}
             <CustomWalletConnect />
           </div>
         </div>

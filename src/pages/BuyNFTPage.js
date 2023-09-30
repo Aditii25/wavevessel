@@ -3,6 +3,10 @@ import "./BuyNFTPage.css";
 import { Link, useParams } from "react-router-dom";
 import rocket from "../assets/rocket.png";
 import nft1 from "../assets/nft1.png";
+import { ethers } from "ethers";
+import erc20Abi from "../contract/IERC20.json";
+import contractAbi from "../contract/PurchaseNFTOverTime.json";
+import { Framework } from "@superfluid-finance/sdk-core";
 
 function BuyNFTPage() {
   const { chain, tokenId, contractAddress } = useParams();
@@ -32,6 +36,62 @@ function BuyNFTPage() {
 
     calculateEndTime();
   }, [flowRate, price]);
+
+  const BuyNFTOverTime = async (sellerAddress, tokenAddress, tokenId) => {
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const sf = await Framework.create({
+          chainId: 84531,
+          provider: provider,
+        });
+
+        const daix = await sf.loadSuperToken("fDAIx");
+
+        const contract = new ethers.Contract(
+          contractAddress,
+          contractAbi.abi,
+          signer
+        );
+
+        const ethAmount = flowRate; // Replace this with the amount of Ether you want to convert
+
+        // Convert ETH to Wei
+        const weiAmount = ethers.utils.parseEther(ethAmount.toString());
+
+        const erc20ContractAddress = ethers.utils.getAddress(
+          "0x5735C32C38f5Af0FB04a7c77C832Ba4D7aBfFeC8"
+        );
+        const erc20Contract = new ethers.Contract(
+          erc20ContractAddress,
+          erc20Abi.abi,
+          signer
+        );
+
+        // const approve = erc20Contract.approve(
+        //   contractAddress,
+        //   "1000000000000000000"
+        // );
+        // console.log("approved");
+
+        const tx = await contract.BuyNFTOverTime(
+          sellerAddress,
+          tokenAddress,
+          tokenId,
+          weiAmount,
+          erc20ContractAddress,
+          daix.address
+        );
+        await tx.wait();
+        console.log("bought");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className="single_product">
