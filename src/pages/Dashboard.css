@@ -1,0 +1,30 @@
+.dashboard-navbar {
+  width: 100%;
+  margin: 0px 0;
+  margin-bottom: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  list-style-type: none;
+  padding: 4px;
+  border-radius: 8px;
+}
+.dashboard-navbar-link {
+  font-family: "Urbanist", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  padding: 15px 30px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 1s ease;
+}
+.dashboard-navbar-link:hover {
+  background: #2c63ff;
+}
+.dashboard-navbar-link.active {
+  background: #f70fff;
+  color: white;
+}

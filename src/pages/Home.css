@@ -1,0 +1,425 @@
+.hero {
+  height: 800px;
+  position: relative;
+  margin-bottom: 100px;
+  display: flex;
+}
+.container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  padding: 0 20px;
+  border: apx solid red;
+}
+
+.hero__object {
+  animation: zoom ease-out;
+  animation-delay: 0.4s;
+  animation-duration: 1.5s;
+  top: -160px;
+  left: 260px;
+  z-index: 1;
+}
+.circle {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+}
+.circle::before {
+  content: "";
+  width: 100%;
+  top: initial;
+  bottom: initial;
+  left: initial;
+  right: initial;
+  position: absolute;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  opacity: 0.84;
+  filter: blur(100px);
+}
+.hero__wrapper {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+}
+.hero__content {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+  height: 100%;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 2;
+  position: relative;
+}
+.hero__title {
+  margin-bottom: 16px;
+}
+.hero__title h1 {
+  color: #fff;
+  font-size: 120px;
+  line-height: 130px;
+  position: relative;
+  font-weight: 700;
+  text-transform: none;
+  margin-bottom: 20px;
+}
+.stroke-double {
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stroke-double:before {
+  content: "Base NFT";
+  position: absolute;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px #932cff;
+  top: -30px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 80px;
+  overflow: hidden;
+  opacity: 0.45;
+}
+.stroke-double:after {
+  content: "Base NFT";
+  position: absolute;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px #3f0fff;
+  top: -60px;
+  left: 0;
+  right: 0;
+  z-index: -2;
+  height: 80px;
+  overflow: hidden;
+  opacity: 0.27;
+}
+.hero__subtitle {
+  margin-bottom: 20px;
+}
+.hero__subtitle p {
+  font-family: "Urbanist", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.64);
+  line-height: 36px;
+}
+.hero__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+.hero__buttons .cta-button {
+  box-shadow: 0 16px 24px rgb(247 15 255 / 48%);
+}
+.cta-button {
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  width: 204px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+.cta-button a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #06060c;
+  color: #fff;
+  width: 200px;
+  height: 46px;
+  position: absolute;
+  border-radius: 24px;
+  border: none;
+}
+
+.hero__image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 100%;
+  padding-top: 0;
+  padding-right: 0px;
+}
+.hero__image img {
+  height: auto;
+  max-width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  vertical-align: middle;
+  outline: 0;
+}
+a.cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.second-section {
+  width: 100%;
+  margin-bottom: 100px;
+  background-image: linear-gradient(
+      180deg,
+      #06060c 0%,
+      rgba(6, 6, 12, 0.01) 47.37%,
+      rgba(6, 6, 12, 0.84) 73%,
+      #06060c 100%
+    ),
+    url(../assets/bg2.png);
+  background-size: cover;
+}
+.second-title p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.explore-nfts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+.nft-item {
+  max-width: 330px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+}
+.product_image {
+  width: 100%;
+  position: relative;
+  padding: 0 0 100% 0;
+}
+.product_image img {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 24px !important;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.product__content {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: 16px;
+  flex-direction: column;
+  padding: 24px;
+}
+.second-main-title p {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  margin-top: 10px;
+}
+
+.second-main-title p span {
+  background: -webkit-linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.products__footer {
+  width: 100%;
+  margin: 40px 0;
+}
+.main-btn {
+  height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  transition: all 0.4s ease-out;
+}
+.main-btn:hover {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+.main-btn__name p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+}
+.main-btn__icon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
+.powered-by-main-title {
+  margin: auto;
+  text-align: center;
+}
+.powered-by-main-title p {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  margin-top: 10px;
+}
+.powered-by-main-title p span {
+  background: -webkit-linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.partener {
+  margin-bottom: 100px;
+}
+.partener__wrapper {
+  width: 100%;
+}
+.partener__list {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 42px 24px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+.partener__logo {
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.partener__logo img {
+  height: auto;
+  max-height: 80px;
+  min-width: 100px;
+  max-width: 200px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.reasons .second-title p {
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 50px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.features_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+  gap: 24px;
+}
+.features_item {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+.features_icon {
+  width: 148px;
+  height: 148px;
+  border-radius: 24px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.features_icon img {
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.features_title {
+  margin-bottom: 8px;
+}
+.features_title p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.features_description {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.8);
+}
+@keyframes zoom {
+  0% {
+    width: 40px;
+    height: 40px;
+    top: 50px;
+    left: 20px;
+  }
+  100% {
+    width: 240px;
+    height: 240px;
+    top: -160px;
+    left: 260px;
+  }
+}
+@media (min-width: 1080px) {
+  .container {
+    max-width: 1040px;
+  }
+}
+@media (min-width: 1240px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+@media (min-width: 1480px) {
+  .container {
+    max-width: 1440px;
+  }
+}

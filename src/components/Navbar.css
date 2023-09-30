@@ -1,0 +1,106 @@
+/* Navbar.css */
+.navbar {
+  width: 100%;
+  position: absolute;
+  top: 24px;
+  z-index: 4;
+}
+
+.navbar-row {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  flex-wrap: wrap;
+  transition: all 0.7s ease-out;
+  height: max-content;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px; /* Adjust the logo image width as needed */
+  height: 30px; /* Adjust the logo image height as needed */
+  margin-right: 10px;
+}
+.logo span {
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-family: "Urbanist", sans-serif;
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+.button-container p {
+  cursor: pointer;
+}
+.wallet_parent {
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  width: 180px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.wallet_button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #06060c;
+  width: 176px;
+  height: 46px;
+  position: absolute;
+  border-radius: 24px;
+  border: none;
+  color: white;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.wrong-network {
+  background: #ff494a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrong-network svg,
+.chain-button svg {
+  margin-left: 5px;
+}
+@media (max-width: 1480px) {
+  .navbar-inside {
+    padding: 0 20px;
+  }
+}
+/* Media query for screens smaller than 768px (adjust as needed) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .button-container {
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,230 @@
+.first_heading {
+  margin-top: 184px;
+  width: 100%;
+  margin-bottom: 100px;
+  position: relative;
+}
+.single_product {
+  position: relative;
+  display: flex;
+}
+.first_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+}
+
+.first_content {
+  display: flex;
+  padding: 40px 0;
+  flex-direction: column;
+  gap: 24px;
+  width: 50%;
+}
+.first_title p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 120px;
+  line-height: 148px;
+
+  margin: 0;
+}
+.first_subtitle {
+  margin-bottom: 24px;
+}
+.first_subtitle p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 36px;
+  color: rgba(255, 255, 255, 0.64);
+}
+.first_image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min-content;
+  height: min-content;
+  position: absolute;
+  top: -100px;
+  right: 0;
+}
+.first_image img {
+  position: relative;
+  z-index: 2;
+  max-width: none !important;
+  animation: circletwo 15s ease-in-out infinite;
+  height: auto;
+}
+.first_image .circle {
+  animation: circlethree 10s ease-in-out infinite;
+}
+.first_object {
+  bottom: 0;
+  right: 0;
+}
+.circle {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+}
+.circle::before {
+  content: "";
+  width: 100%;
+  top: initial;
+  bottom: initial;
+  left: initial;
+  right: initial;
+  position: absolute;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  opacity: 0.84;
+  filter: blur(100px);
+}
+
+/* NftCard.css */
+
+.nft-card {
+  display: flex;
+  align-items: flex-start; /* Ensure equal height for both divs */
+  padding: 10px;
+  margin-top: 100px;
+  width: 100%;
+}
+
+.nft-image {
+  flex: 1; /* Take up 50% of the container's width */
+  padding: 10px;
+  max-width: 50%;
+  margin-right: 50px;
+}
+
+.nft-image img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+.nft-details h2 {
+  font-size: 40px;
+  margin-bottom: 24px;
+  font-style: normal;
+  color: #ffffff;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 700;
+  line-height: normal;
+  margin: 20px 0;
+}
+.nft-details {
+  flex: 1; /* Take up 50% of the container's width */
+  padding: 10px;
+}
+.nft-details p {
+  margin-bottom: 24px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  font-family: "Urbanist", sans-serif;
+}
+.token_standard {
+  font-weight: 600;
+  font-family: "Urbanist", sans-serif;
+  font-size: 14px;
+  width: max-content;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background-color: gray;
+  color: white;
+}
+.nft-owner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 40px 0;
+  font-family: "Urbanist", sans-serif;
+}
+.nft-owner span {
+  color: rgba(255, 255, 255, 0.64);
+  font-family: "Urbanist", sans-serif;
+  font-weight: 600;
+}
+.nft-owner span.address {
+  color: white;
+  font-size: 1.3rem;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 700;
+}
+.buy-nft-parent {
+  background: linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+.buy-nft {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #06060c;
+  width: calc(100% - 4px);
+  height: 46px;
+  position: absolute;
+  border-radius: 24px;
+  border: none;
+  color: white;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+.nft-cost-price {
+  margin-left: 20px;
+  font-size: 30px;
+
+  background: -webkit-linear-gradient(57.75deg, #f70fff 14.44%, #2c63ff 85.65%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nft-cost-main {
+  font-size: 55px;
+  line-height: normal;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 30px;
+}
+.nft-description-parent {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 50px;
+}
+span.nft-description {
+  letter-spacing: 1.5px;
+  line-height: 150%;
+  color: white;
+  font-size: large;
+}
+/* Additional styling for nft-details can be added here */
+
+@keyframes circletwo {
+  0% {
+    transform: rotate(0deg) translateX(22px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(22px) rotate(-360deg);
+  }
+}
+
+@keyframes circlethree {
+  0% {
+    transform: rotate(0deg) translateX(19px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(19px) rotate(-360deg);
+  }
+}

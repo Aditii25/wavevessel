@@ -1,0 +1,184 @@
+.product-content .nft-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.nft-bg {
+  background-image: linear-gradient(
+      180deg,
+      #06060c 0%,
+      rgba(6, 6, 12, 0.01) 47.37%,
+      rgba(6, 6, 12, 0.84) 73%,
+      #06060c 100%
+    ),
+    url(../assets/bg2.png);
+  background-size: cover;
+}
+
+.product-content {
+  padding: 5px 10px;
+  width: 90%;
+  margin: auto;
+}
+.listing-price-parent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.listing-buttons {
+  margin: 10px 0;
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+.listing-buttons > button {
+  padding: 10px 20px;
+  width: 50%;
+  font-family: "Urbanist", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.listing-edit-button {
+  background: #2c63ff;
+  color: white;
+  border: 1px solid #2c63ff;
+}
+
+.listing-cancle-button {
+  background: #f70fff;
+  color: white;
+  border: 1px solid #f70fff;
+}
+.nft-item {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sold-nfts .explore-nfts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+.sold-nfts .nft-item {
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+}
+.sold-nfts .nft-item-inside-one {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.sold-nfts .product_image {
+  width: 250px;
+  padding: 0px;
+  height: 100%;
+}
+.sold-nfts .product_image img {
+  position: inherit;
+}
+.sold-nfts .product-content {
+  flex: 2;
+  margin: 0 20px;
+}
+.nft-item-inside-two {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 100%;
+}
+.sold-nfts .title {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.34);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.sold-nfts .value {
+  font-family: "Urbanist", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+.progress {
+  border-radius: 20px;
+  position: relative;
+  margin: 10px 0;
+  height: 25px;
+  width: 100%;
+  max-width: 97%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-done {
+  background: linear-gradient(to left, #f70fff, #2c63ff);
+  box-shadow: 0 3px 3px -5px #2c63ff, 0 2px 5px #2c63ff;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  opacity: 1;
+  transition: 1s ease 0.3s;
+  position: relative;
+}
+.progress-bar-running {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    #ffffff08,
+    #ffffff10,
+    #ffffff3f,
+    #ffffff3f,
+    #ffffff10,
+    #ffffff08
+  );
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 10%;
+  animation: move 3s linear infinite;
+}
+.product-content p {
+  margin: 0;
+}
+.sold-nfts .value.progress-title {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.nft-item-inside-two p {
+  margin: 0;
+  padding: 0;
+}
+.sold-nfts .value.nft-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@keyframes move {
+  0% {
+    left: 10%;
+    right: 90%;
+  }
+
+  100% {
+    left: 80%;
+    right: 10%;
+  }
+}
