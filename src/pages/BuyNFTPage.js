@@ -45,13 +45,14 @@ function BuyNFTPage() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-
+        console.log(signer);
         const sf = await Framework.create({
           chainId: 8453,
           provider: provider,
         });
 
         const daix = await sf.loadSuperToken("DAIx");
+
         console.log(daix);
         const contract = new ethers.Contract(
           contractAddress,
@@ -66,7 +67,7 @@ function BuyNFTPage() {
         console.log(parseInt(weiAmount));
 
         const erc20ContractAddress = ethers.utils.getAddress(
-          "0x5735C32C38f5Af0FB04a7c77C832Ba4D7aBfFeC8"
+          "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb"
         );
         const erc20Contract = new ethers.Contract(
           erc20ContractAddress,
@@ -90,21 +91,15 @@ function BuyNFTPage() {
           daix.address
         );
         const tx = await contract.BuyNFTOverTime(
-          // nft[0].nftOwner,
-          // nft[0].contract,
-          // nft[0].identifier,
-          // parseInt(weiAmount),
-          // parseInt(weiAmount),
-          // erc20ContractAddress,
-          // daix.address
-          "0x47a0aD41B110E852437F3b415B29Bb163c639632",
-          "0x341c5705781299de9ade997b5d847ef542c43803",
-          1,
-          1000000000000,
-          1000000000000,
+          nft[0].nftOwner,
+          nft[0].contract,
+          nft[0].identifier,
+          weiAmount,
+          weiAmount,
           erc20ContractAddress,
           daix.address
         );
+        // Adjust the gas price as needed;
         await tx.wait();
         console.log("bought");
         setButtonText("Stream Started!!!");
