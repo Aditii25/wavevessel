@@ -1,12 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import nft1 from "../assets/nft1.png";
 import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
 import nft4 from "../assets/nft4.png";
 import { Link } from "react-router-dom";
 import CustomProgressBar from "./CustomProgressBar";
+import { useAccount } from "wagmi";
+import { ethers } from "ethers";
+import contractAbi from "../contract/PurchaseNFTOverTime.json";
+const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
 
 function ProfileOnSaleNfts() {
+  const [sellers, setSellers] = useState([]);
+  const [provider, setProvider] = useState(null);
+  const { address } = useAccount();
+
+  useEffect(() => {
+    // Initialize ethers provider
+    if (window.ethereum) {
+      const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(newProvider);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Fetch sellers when provider is initialized
+    if (provider) {
+      getBuyerData();
+    }
+  }, [provider]);
+
+  const getBuyerData = async () => {
+    try {
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractAbi.abi,
+        provider
+      );
+      const result = await contract.getBuyerData(address);
+      console.log(result);
+      setSellers(result);
+    } catch (error) {
+      console.error("Error fetching sellers: ", error);
+    }
+  };
   return (
     <div>
       <section className="container nft-bg sold-nfts ">

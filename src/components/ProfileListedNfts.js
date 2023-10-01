@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import nft1 from "../assets/nft1.png";
 import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
@@ -6,6 +6,10 @@ import nft4 from "../assets/nft4.png";
 import { Link } from "react-router-dom";
 import "./ProfileNfts.css";
 import PopupForEditUnlist from "./PopupForEditUnlist";
+import { ethers } from "ethers";
+import contractAbi from "../contract/PurchaseNFTOverTime.json";
+import { useAccount } from "wagmi";
+const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
 
 function ProfileListedNfts() {
   const [showPopup, setShowPopup] = useState({
@@ -15,6 +19,40 @@ function ProfileListedNfts() {
     tokenAddress: "",
     price: "",
   });
+
+  const [sellers, setSellers] = useState([]);
+  const [provider, setProvider] = useState(null);
+  const { address } = useAccount();
+
+  useEffect(() => {
+    // Initialize ethers provider
+    if (window.ethereum) {
+      const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(newProvider);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Fetch sellers when provider is initialized
+    if (provider) {
+      getSellerData();
+    }
+  }, [provider]);
+
+  const getSellerData = async () => {
+    try {
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractAbi.abi,
+        provider
+      );
+      const result = await contract.getSellerData(address);
+      console.log(result);
+      setSellers(result);
+    } catch (error) {
+      console.error("Error fetching sellers: ", error);
+    }
+  };
   return (
     <div>
       <section className="container nft-bg">

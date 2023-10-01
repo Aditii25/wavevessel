@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./PopupForEditUnlist.css";
 import { ethers } from "ethers";
+import closeSvg from "../assets/clear_white_24dp.svg";
 import contractAbi from "../contract/PurchaseNFTOverTime.json";
+const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
 
 function PopupForEditUnlist(props) {
   const [nftPrice, setnftPrice] = useState(props.showPopup.price);
@@ -13,10 +15,8 @@ function PopupForEditUnlist(props) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
-        console.log(process.env.REACT_APP_CONTRACT_ADDRESS);
-
         const contract = new ethers.Contract(
-          process.env.REACT_APP_CONTRACT_ADDRESS,
+          contractAddress,
           contractAbi.abi,
           signer
         );
@@ -25,11 +25,11 @@ function PopupForEditUnlist(props) {
 
         // Convert ETH to Wei
         const weiAmount = ethers.utils.parseEther(ethAmount.toString());
-        console.log(nftId, weiAmount.toString(), nftAddress);
+
         const tx = await contract.editSale(
-          "5000000000000000",
-          nftId,
-          nftAddress
+          500000000000000000n,
+          0,
+          "0x2980947b64B38B51ED0F878C29a55c319C5dA277"
         );
         await tx.wait();
         console.log("Edited");
@@ -48,15 +48,18 @@ function PopupForEditUnlist(props) {
         console.log(process.env.REACT_APP_CONTRACT_ADDRESS);
 
         const contract = new ethers.Contract(
-          process.env.REACT_APP_CONTRACT_ADDRESS,
+          contractAddress,
           contractAbi.abi,
           signer
         );
         console.log(contract);
 
-        const tx = await contract.cancelSale(nftId, nftAddress);
+        const tx = await contract.cancelSale(
+          2,
+          "0x2769090f83ad8b496b64daea8ee4572df52972b5"
+        );
         await tx.wait();
-        console.log("Edited");
+        console.log("NFT Unlisted");
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +70,18 @@ function PopupForEditUnlist(props) {
       <div class="popup-overlay">
         <div class="popup-container">
           <div class="popup-card">
+            <div className="close-popup">
+              <img
+                src={closeSvg}
+                alt="close icon"
+                className="close-icon"
+                onClick={() =>
+                  props.setShowPopup({
+                    show: false,
+                  })
+                }
+              />
+            </div>
             <h2>
               {props.showPopup && props.showPopup.type === "edit"
                 ? "Edit Listing Price"

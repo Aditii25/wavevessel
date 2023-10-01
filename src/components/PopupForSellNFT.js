@@ -4,6 +4,7 @@ import erc721Abi from "../contract/ERC721.json";
 import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import closeSvg from "../assets/clear_white_24dp.svg";
+const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
 
 function PopupForSellNFT(props) {
   const [nftPrice, setnftPrice] = useState("");
@@ -24,21 +25,20 @@ function PopupForSellNFT(props) {
         );
         const checkApprove = await erc721Contract.isApprovedForAll(
           address,
-          process.env.REACT_APP_CONTRACT_ADDRESS
+          contractAddress
         );
         console.log(checkApprove);
         if (!checkApprove) {
           const transx = await erc721Contract.setApprovalForAll(
-            process.env.REACT_APP_CONTRACT_ADDRESS,
+            contractAddress,
             true
           );
           await transx.wait();
           console.log("approved");
         }
-        console.log(process.env.REACT_APP_CONTRACT_ADDRESS);
 
         const contract = new ethers.Contract(
-          process.env.REACT_APP_CONTRACT_ADDRESS,
+          contractAddress,
           contractAbi.abi,
           signer
         );
@@ -47,12 +47,12 @@ function PopupForSellNFT(props) {
 
         // Convert ETH to Wei
         const weiAmount = ethers.utils.parseEther(ethAmount.toString());
-        console.log(nftId, weiAmount.toString(), nftAddress);
-        const tx = await contract.putOnSale(
-          nftId,
-          "5000000000000000",
-          nftAddress
+        console.log(
+          0,
+          weiAmount.toString(),
+          "0x2769090f83aD8B496B64dAEa8eE4572DF52972B5"
         );
+        const tx = await contract.putOnSale(nftId, weiAmount, nftAddress);
         await tx.wait();
         console.log("on sale");
       }
