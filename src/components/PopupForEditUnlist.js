@@ -3,12 +3,18 @@ import "./PopupForEditUnlist.css";
 import { ethers } from "ethers";
 import closeSvg from "../assets/clear_white_24dp.svg";
 import contractAbi from "../contract/PurchaseNFTOverTime.json";
-const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
+const contractAddress = "0x6ae147496eC85ec87769C17cD41EB1283D42f014";
 
 function PopupForEditUnlist(props) {
   const [nftPrice, setnftPrice] = useState(props.showPopup.price);
+  const [buttonText, setButtonText] = useState(
+    props.showPopup.type === "edit" ? "Save" : "Yes"
+  );
 
   const EditListing = async (nftId, nftAddress) => {
+    setButtonText(
+      props.showPopup.type === "edit" ? "Saving Listed NFT" : "Yes"
+    );
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -26,19 +32,21 @@ function PopupForEditUnlist(props) {
         // Convert ETH to Wei
         const weiAmount = ethers.utils.parseEther(ethAmount.toString());
 
-        const tx = await contract.editSale(
-          500000000000000000n,
-          0,
-          "0x2980947b64B38B51ED0F878C29a55c319C5dA277"
-        );
+        const tx = await contract.editSale(weiAmount, nftId, nftAddress);
         await tx.wait();
         console.log("Edited");
+        setButtonText(props.showPopup.type === "edit" ? "Saved" : "Yes");
+        setTimeout(() => {
+          setButtonText(props.showPopup.type === "edit" ? "Save" : "Yes");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
+      setButtonText(props.showPopup.type === "edit" ? "Save" : "Yes");
     }
   };
   const cancelListing = async (nftId, nftAddress) => {
+    setButtonText(props.showPopup.type === "edit" ? "Save" : "Unlisting NFT");
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -54,15 +62,19 @@ function PopupForEditUnlist(props) {
         );
         console.log(contract);
 
-        const tx = await contract.cancelSale(
-          2,
-          "0x2769090f83ad8b496b64daea8ee4572df52972b5"
-        );
+        const tx = await contract.cancelSale(nftId, nftAddress);
         await tx.wait();
         console.log("NFT Unlisted");
+        setButtonText(
+          props.showPopup.type === "edit" ? "Saved" : "NFT Unlisted"
+        );
+        setTimeout(() => {
+          setButtonText(props.showPopup.type === "edit" ? "Save" : "Yes");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
+      setButtonText(props.showPopup.type === "edit" ? "Save" : "Yes");
     }
   };
   return (
@@ -125,9 +137,7 @@ function PopupForEditUnlist(props) {
                 }
               }}
             >
-              {props.showPopup && props.showPopup.type === "edit"
-                ? "Save"
-                : "Yes"}
+              {buttonText}
             </button>
           </div>
         </div>

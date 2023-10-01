@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import nft1 from "../assets/nft1.png";
 import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
@@ -11,276 +11,100 @@ import nft9 from "../assets/nft9.jpg";
 import nft10 from "../assets/nft10.jpg";
 import { Link } from "react-router-dom";
 import PopupForSellNFT from "./PopupForSellNFT";
+import { useAccount } from "wagmi";
 
 function ProfileAllNfts() {
+  const [nfts, setNfts] = useState([]);
+  const { address } = useAccount();
+  const [nextPageCursor, setNextPageCursor] = useState(null);
   const [showPopup, setShowPopup] = useState({
     show: false,
     tokenId: "",
     tokenAddress: "",
   });
+  const fetchNFTs = async () => {
+    if (!address) {
+      return; // Don't fetch if no wallet is connected
+    }
+
+    const apiKey = "e64d85a397004d18ba1287e9c59bb553";
+    let url = `https://api.opensea.io/v2/chain/base/account/${address}/nfts?limit=10`;
+
+    // Add the cursor if available
+    if (nextPageCursor) {
+      url += `&next=${nextPageCursor}`;
+    }
+
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "X-API-KEY": apiKey,
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Fetch error: ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      // If nextPageCursor is null, reset the nfts array
+      const updatedNfts = nextPageCursor ? [...nfts, ...data.nfts] : data.nfts;
+      setNfts(updatedNfts); // Update the NFTs array
+      setNextPageCursor(data.next); // Update the next page cursor
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchNFTs();
+  }, [address]);
 
   return (
     <div>
       <section className="second-section single-product-explore-nfts">
         <div className="container">
           <div className="explore-nfts">
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft1} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="explore-buy">
-                  <div
-                    className="explore-buy-button"
-                    onClick={() => {
-                      setShowPopup({
-                        show: true,
-                        tokenId: 2,
-                        tokenAddress:
-                          "0x2769090f83aD8B496B64dAEa8eE4572DF52972B5",
-                      });
-                    }}
-                  >
-                    List Now
+            {nfts.length > 0 &&
+              nfts.map((nft) => (
+                <div className="nft-item" key={nft.identifier}>
+                  <div className="product_image">
+                    <img
+                      src={nft.image_url ? nft.image_url : nft1}
+                      alt={nft.image_url}
+                      decoding="async"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="product-content">
+                    <p className="nft-title">
+                      {nft.name
+                        ? nft.name
+                        : "the-amazing-game #" + nft.identifier}
+                    </p>
+                    <div className="explore-buy">
+                      <div
+                        className="explore-buy-button"
+                        onClick={() => {
+                          setShowPopup({
+                            show: true,
+                            tokenId: parseInt(nft.identifier),
+                            tokenAddress: nft.contract,
+                          });
+                        }}
+                      >
+                        List Now
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft2} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <div
-                    className="explore-buy-button"
-                    onClick={() => {
-                      setShowPopup({
-                        show: true,
-                        tokenId: 0,
-                        tokenAddress:
-                          "0x2980947b64B38B51ED0F878C29a55c319C5dA277",
-                      });
-                    }}
-                  >
-                    List Now
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft3} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <div
-                    className="explore-buy-button"
-                    onClick={() => {
-                      setShowPopup({
-                        show: true,
-                        tokenId: 0,
-                        tokenAddress:
-                          "0xD02ae5223be2c604a0d67a6434685f20FAc9CFa6",
-                      });
-                    }}
-                  >
-                    List Now
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <div className="product_image">
-                <img src={nft4} alt="" decoding="async" loading="lazy" />
-              </div>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="explore-buy">
-                  <div
-                    className="explore-buy-button"
-                    onClick={() => {
-                      setShowPopup({
-                        show: true,
-                        tokenId: 2,
-                        tokenAddress:
-                          "0xD02ae5223be2c604a0d67a6434685f20FAc9CFa6",
-                      });
-                    }}
-                  >
-                    List Now
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft5 }}
-              >
-                <img src={nft5} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft5 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft6 }}
-              >
-                <img src={nft6} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft6 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft7 }}
-              >
-                <img src={nft7} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft7 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft8 }}
-              >
-                <img src={nft8} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft8 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft9 }}
-              >
-                <img src={nft9} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft9 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft10 }}
-              >
-                <img src={nft10} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft10 }}
-                  >
-                    List Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+              ))}
+          </div>{" "}
+          {nextPageCursor && (
+            <button onClick={() => fetchNFTs()}>{`Load More`}</button>
+          )}
         </div>
       </section>
       {showPopup.show ? (

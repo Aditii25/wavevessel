@@ -4,13 +4,15 @@ import erc721Abi from "../contract/ERC721.json";
 import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import closeSvg from "../assets/clear_white_24dp.svg";
-const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
+const contractAddress = "0x6ae147496eC85ec87769C17cD41EB1283D42f014";
 
 function PopupForSellNFT(props) {
   const [nftPrice, setnftPrice] = useState("");
+  const [buttonText, setButtonText] = useState("List Now");
   const { address } = useAccount();
 
   const PutOnSale = async (nftId, nftAddress) => {
+    setButtonText("Listing...");
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -47,17 +49,18 @@ function PopupForSellNFT(props) {
 
         // Convert ETH to Wei
         const weiAmount = ethers.utils.parseEther(ethAmount.toString());
-        console.log(
-          0,
-          weiAmount.toString(),
-          "0x2769090f83aD8B496B64dAEa8eE4572DF52972B5"
-        );
+        console.log(nftId, weiAmount.toString(), nftAddress);
         const tx = await contract.putOnSale(nftId, weiAmount, nftAddress);
         await tx.wait();
         console.log("on sale");
+        setButtonText("Listed Successfully");
+        setTimeout(() => {
+          setButtonText("List Now");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
+      setButtonText("List Now");
     }
   };
   return (
@@ -141,7 +144,7 @@ function PopupForSellNFT(props) {
                       )
                     }
                   >
-                    List Now
+                    {buttonText}
                   </span>
                 </div>
               </div>

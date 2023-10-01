@@ -1,12 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import rocket from "../assets/rocket.png";
 import nft1 from "../assets/nft1.png";
 import nft2 from "../assets/nft2.png";
 import nft3 from "../assets/nft3.png";
 import nft4 from "../assets/nft4.png";
 import { Link } from "react-router-dom";
+import { ethers } from "ethers";
+import contractAbi from "../contract/PurchaseNFTOverTime.json";
+import { useAccount } from "wagmi";
+const contractAddress = "0x6ae147496eC85ec87769C17cD41EB1283D42f014";
 
 function AllNFTExplore() {
+  const [listingNFTs, setListingNFTs] = useState([]);
+
+  const getSellerData = async () => {
+    try {
+      const newProvider = new ethers.providers.JsonRpcProvider(
+        "https://1rpc.io/base"
+      );
+
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractAbi.abi,
+        newProvider
+      );
+      const sellers = await contract.getSellers();
+      let finalArr = [];
+      for (let j = 0; j < sellers.length; j++) {
+        const result = await contract.getSellerData(sellers[j]);
+        console.log(result);
+        let arr = [];
+        const apiKey = "e64d85a397004d18ba1287e9c59bb553";
+        const options = {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            "X-API-KEY": apiKey,
+          },
+        };
+        for (let i = 0; i < result.length; i++) {
+          if (!result[i].isSold) {
+            let url = `https://api.opensea.io/v2/chain/base/contract/${result[i].tokenAddress}/nfts/1`;
+            try {
+              const response = await fetch(url, options);
+              if (!response.ok) {
+                throw new Error(`Fetch error: ${response.statusText}`);
+              }
+              const data = await response.json();
+              console.log(data);
+              const ethAmount = ethers.utils.formatUnits(
+                parseInt(result[i].price),
+                "ether"
+              );
+              data.nft.nftOwner = result[i].seller;
+              data.nft.price = ethAmount;
+              data.nft.identifier = parseInt(result[i].tokenId);
+              arr.push(data.nft);
+              // If nextPageCursor is null, reset the nfts array
+              // Update the next page cursor
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        }
+        console.log(arr);
+        finalArr.push(arr);
+      }
+      console.log(finalArr);
+
+      setListingNFTs(finalArr);
+    } catch (error) {
+      console.error("Error fetching sellers: ", error);
+    }
+  };
+  useEffect(() => {
+    // Fetch sellers when provider is initialized
+    getSellerData();
+  }, []);
   return (
     <div>
       <div className="single_product">
@@ -45,118 +115,49 @@ function AllNFTExplore() {
             </div>
           </div>
           <div className="explore-nfts">
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft1 }}
-              >
-                <img src={nft1} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="listing-price-parent">
-                  <span className="listing-price-title">Listing Price</span>
-                  <span className="listing-price-value">0.003 ETH</span>
-                </div>
-                <div className="explore-buy">
+            {listingNFTs.length > 0 &&
+              listingNFTs.map((nft) => (
+                <div className="nft-item" key={nft[0].identifier}>
                   <Link
-                    className="explore-buy-button"
+                    className="product_image"
                     to="/shop/product"
-                    state={{ nft_image: nft1 }}
+                    state={{
+                      nft: nft,
+                    }}
                   >
-                    Buy Now
+                    <img
+                      src={nft[0].image_url ? nft[0].image_url : nft1}
+                      alt=""
+                      decoding="async"
+                      loading="lazy"
+                    />
                   </Link>
+                  <div className="product-content">
+                    <p className="nft-title">
+                      {nft[0].name
+                        ? nft[0].name
+                        : "the-amazing-game #" + nft[0].identifier}
+                    </p>
+                    <div className="listing-price-parent">
+                      <span className="listing-price-title">Listing Price</span>
+                      <span className="listing-price-value">
+                        {nft[0].price} Dai
+                      </span>
+                    </div>
+                    <div className="explore-buy">
+                      <Link
+                        className="explore-buy-button"
+                        to="/shop/product"
+                        state={{
+                          nft: nft,
+                        }}
+                      >
+                        Buy Now
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft2 }}
-              >
-                <img src={nft2} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="listing-price-parent">
-                  <span className="listing-price-title">Listing Price</span>
-                  <span className="listing-price-value">0.003 ETH</span>
-                </div>
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft1 }}
-                  >
-                    Buy Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft3 }}
-              >
-                <img src={nft3} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="listing-price-parent">
-                  <span className="listing-price-title">Listing Price</span>
-                  <span className="listing-price-value">0.003 ETH</span>
-                </div>
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft1 }}
-                  >
-                    Buy Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="nft-item">
-              <Link
-                className="product_image"
-                to="/shop/product"
-                state={{ nft_image: nft4 }}
-              >
-                <img src={nft4} alt="" decoding="async" loading="lazy" />
-              </Link>
-              <div className="product-content">
-                <p className="nft-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, necessitatibus?
-                </p>
-                <div className="listing-price-parent">
-                  <span className="listing-price-title">Listing Price</span>
-                  <span className="listing-price-value">0.003 ETH</span>
-                </div>
-                <div className="explore-buy">
-                  <Link
-                    className="explore-buy-button"
-                    to="/shop/product"
-                    state={{ nft_image: nft1 }}
-                  >
-                    Buy Now
-                  </Link>
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
       </section>

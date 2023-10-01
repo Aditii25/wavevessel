@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./BuyNFTPage.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import rocket from "../assets/rocket.png";
 import nft1 from "../assets/nft1.png";
 import { ethers } from "ethers";
@@ -8,16 +8,17 @@ import erc20Abi from "../contract/IERC20.json";
 import contractAbi from "../contract/PurchaseNFTOverTime.json";
 import { Framework } from "@superfluid-finance/sdk-core";
 
+const contractAddress = "0x6ae147496eC85ec87769C17cD41EB1283D42f014";
+
 function BuyNFTPage() {
-  const { chain, tokenId, contractAddress } = useParams();
+  const location = useLocation();
+  console.log(location.state ? location.state.nft : null);
+  const [nft, setNft] = useState(location.state ? location.state.nft : null);
 
   const [flowRate, setFlowRate] = useState(null);
-  const [price, setPrice] = useState(0.36);
+  const [price, setPrice] = useState(nft[0].price);
   const [endTime, setEndTime] = useState(null);
-
-  useEffect(() => {
-    console.log(chain, tokenId, contractAddress);
-  });
+  const [buttonText, setButtonText] = useState("Buy Now With Superfluid");
 
   useEffect(() => {
     const calculateEndTime = () => {
@@ -37,7 +38,8 @@ function BuyNFTPage() {
     calculateEndTime();
   }, [flowRate, price]);
 
-  const BuyNFTOverTime = async (sellerAddress, tokenAddress, tokenId) => {
+  const BuyNFTOverTime = async () => {
+    setButtonText("Waiting...");
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -45,12 +47,12 @@ function BuyNFTPage() {
         const signer = provider.getSigner();
 
         const sf = await Framework.create({
-          chainId: 84531,
+          chainId: 8453,
           provider: provider,
         });
 
-        const daix = await sf.loadSuperToken("fDAIx");
-
+        const daix = await sf.loadSuperToken("DAIx");
+        console.log(daix);
         const contract = new ethers.Contract(
           contractAddress,
           contractAbi.abi,
@@ -60,7 +62,8 @@ function BuyNFTPage() {
         const ethAmount = flowRate; // Replace this with the amount of Ether you want to convert
 
         // Convert ETH to Wei
-        const weiAmount = ethers.utils.parseEther(ethAmount.toString());
+        const weiAmount = ethers.utils.parseEther(ethAmount);
+        console.log(parseInt(weiAmount));
 
         const erc20ContractAddress = ethers.utils.getAddress(
           "0x5735C32C38f5Af0FB04a7c77C832Ba4D7aBfFeC8"
@@ -75,21 +78,43 @@ function BuyNFTPage() {
         //   contractAddress,
         //   "1000000000000000000"
         // );
-        // console.log("approved");
-
+        // console.log(approve);
+        console.log(
+          contract,
+          nft[0].nftOwner,
+          nft[0].contract,
+          nft[0].identifier,
+          parseInt(weiAmount),
+          parseInt(weiAmount),
+          erc20ContractAddress,
+          daix.address
+        );
         const tx = await contract.BuyNFTOverTime(
-          sellerAddress,
-          tokenAddress,
-          tokenId,
-          weiAmount,
+          // nft[0].nftOwner,
+          // nft[0].contract,
+          // nft[0].identifier,
+          // parseInt(weiAmount),
+          // parseInt(weiAmount),
+          // erc20ContractAddress,
+          // daix.address
+          "0x47a0aD41B110E852437F3b415B29Bb163c639632",
+          "0x341c5705781299de9ade997b5d847ef542c43803",
+          1,
+          1000000000000,
+          1000000000000,
           erc20ContractAddress,
           daix.address
         );
         await tx.wait();
         console.log("bought");
+        setButtonText("Stream Started!!!");
+        setTimeout(() => {
+          setButtonText("Buy Now With Superfluid");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
+      setButtonText("Buy Now With Superfluid");
     }
   };
   return (
@@ -122,29 +147,50 @@ function BuyNFTPage() {
         <div className="buy-nft-page">
           <div className="buy-nft-left-parent">
             <div className="nft-image">
-              <img src={nft1} alt="base network" />
+              <img
+                src={nft[0].image_url ? nft[0].image_url : nft1}
+                alt="base network"
+              />
             </div>
             <div className="nft-details">
               <div className="token_standard">
-                <span>ERC721</span>
+                <span>{nft[0].token_standard.toUpperCase()}</span>
               </div>
-              <h2>Testing something</h2>
+              <h2>
+                {nft[0].name
+                  ? nft[0].name
+                  : "the-amazing-game #" + nft[0].identifier}
+              </h2>
               <div className="nft-owner">
                 <span>Owner</span>
-                <span className="address">0x5412fEF...cA865</span>
+                <span className="address">
+                  {nft[0].nftOwner.slice(0, 5) +
+                    "..." +
+                    nft[0].nftOwner.slice(
+                      nft[0].nftOwner.length - 5,
+                      nft[0].nftOwner.length
+                    )}
+                </span>
               </div>
               <div className="nft-owner">
                 <span>Collection</span>
-                <span className="address">0the-masterpiece-collection-4</span>
+                <span className="address">{nft[0].collection}</span>
               </div>
               <div className="nft-owner">
                 <span>Contract Address</span>
-                <span className="address">0x54EF...cA865</span>
+                <span className="address">
+                  {nft[0].contract.slice(0, 5) +
+                    "..." +
+                    nft[0].contract.slice(
+                      nft[0].contract.length - 5,
+                      nft[0].contract.length
+                    )}
+                </span>
               </div>
               <div className="nft-owner">
                 <span>On Sale For</span>
                 <h1 className="nft-cost-main">
-                  0.001
+                  {nft[0].price}
                   <span title="Base NFT cost" className="nft-cost-price">
                     fdai
                   </span>
@@ -169,7 +215,14 @@ function BuyNFTPage() {
                   <span className="field_info"></span>
                 </div>
                 <div className="buy_nft_field_input buy_nft_period">
-                  <span className="buy_nft_period_time">0xajka...9287x</span>
+                  <span className="buy_nft_period_time">
+                    {nft[0].nftOwner.slice(0, 5) +
+                      "..." +
+                      nft[0].nftOwner.slice(
+                        nft[0].nftOwner.length - 5,
+                        nft[0].nftOwner.length
+                      )}
+                  </span>
                 </div>
               </div>
               <div className="buy_nft_field_item">
@@ -178,7 +231,14 @@ function BuyNFTPage() {
                   <span className="field_info"></span>
                 </div>
                 <div className="buy_nft_field_input buy_nft_period">
-                  <span className="buy_nft_period_time">0xajka...9287x</span>
+                  <span className="buy_nft_period_time">
+                    {nft[0].contract.slice(0, 5) +
+                      "..." +
+                      nft[0].contract.slice(
+                        nft[0].contract.length - 5,
+                        nft[0].contract.length
+                      )}
+                  </span>
                 </div>
               </div>
               <div className="buy_nft_field_item">
@@ -187,12 +247,14 @@ function BuyNFTPage() {
                   <span className="field_info"></span>
                 </div>
                 <div className="buy_nft_field_input buy_nft_period">
-                  <span className="buy_nft_period_time">1234</span>
+                  <span className="buy_nft_period_time">
+                    {nft[0].identifier}
+                  </span>
                 </div>
               </div>
               <div className="buy_nft_field_item">
                 <div className="buy_nft_field_title">
-                  <span className="field_title">Flow Rate ( fDaix/sec ) </span>
+                  <span className="field_title">Flow Rate ( Daix/sec ) </span>
                   <span className="field_info"></span>
                 </div>
                 <div className="buy_nft_field_input buy_nft_period">
@@ -228,7 +290,9 @@ function BuyNFTPage() {
                 }`}
               >
                 <div className="buy-nft-parent">
-                  <span className="buy-nft">Buy Now With Superfluid</span>
+                  <span className="buy-nft" onClick={() => BuyNFTOverTime()}>
+                    {buttonText}
+                  </span>
                 </div>
               </div>
             </div>

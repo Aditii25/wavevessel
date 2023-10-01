@@ -9,7 +9,7 @@ import PopupForEditUnlist from "./PopupForEditUnlist";
 import { ethers } from "ethers";
 import contractAbi from "../contract/PurchaseNFTOverTime.json";
 import { useAccount } from "wagmi";
-const contractAddress = "0x052a21C9BD5fe374A5bAbd79Bfbd9EC9E6Cf0d7A";
+const contractAddress = "0x6ae147496eC85ec87769C17cD41EB1283D42f014";
 
 function ProfileListedNfts() {
   const [showPopup, setShowPopup] = useState({
@@ -20,7 +20,7 @@ function ProfileListedNfts() {
     price: "",
   });
 
-  const [sellers, setSellers] = useState([]);
+  const [listingNFTs, setListingNFTs] = useState([]);
   const [provider, setProvider] = useState(null);
   const { address } = useAccount();
 
@@ -48,7 +48,41 @@ function ProfileListedNfts() {
       );
       const result = await contract.getSellerData(address);
       console.log(result);
-      setSellers(result);
+      let arr = [];
+      const apiKey = "e64d85a397004d18ba1287e9c59bb553";
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "X-API-KEY": apiKey,
+        },
+      };
+      for (let i = 0; i < result.length; i++) {
+        if (!result[i].isSold) {
+          let url = `https://api.opensea.io/v2/chain/base/contract/${result[i].tokenAddress}/nfts/1`;
+          try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+              throw new Error(`Fetch error: ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log(data);
+            const ethAmount = ethers.utils.formatUnits(
+              parseInt(result[i].price),
+              "ether"
+            );
+            data.nft.price = ethAmount;
+            data.nft.identifier = result[i].tokenId;
+            arr.push(data.nft);
+            // If nextPageCursor is null, reset the nfts array
+            // Update the next page cursor
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      }
+      console.log(arr);
+      setListingNFTs(arr);
     } catch (error) {
       console.error("Error fetching sellers: ", error);
     }
@@ -57,276 +91,60 @@ function ProfileListedNfts() {
     <div>
       <section className="container nft-bg">
         <div className="explore-nfts">
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft1} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
+          {listingNFTs.length > 0 &&
+            listingNFTs.map((nft) => (
+              <div className="nft-item" key={nft.identifier}>
+                <div className="product_image">
+                  <img
+                    src={nft.image_url ? nft.image_url : nft1}
+                    alt=""
+                    decoding="async"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="product-content">
+                  <p className="nft-title">
+                    {nft.name
+                      ? nft.name
+                      : "the-amazing-game #" + nft.identifier}
+                  </p>
+                  <div className="listing-price-parent">
+                    <span className="listing-price-title">Listing Price</span>
+                    <span className="listing-price-value">{nft.price} dai</span>
+                  </div>
+                  <div className="listing-buttons">
+                    <button
+                      className="listing-edit-button"
+                      onClick={() => {
+                        setShowPopup({
+                          show: true,
+                          type: "edit",
+                          price: nft.price,
+                          tokenAddress: nft.contract,
+                          tokenId: nft.identifier,
+                        });
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="listing-cancle-button"
+                      onClick={() => {
+                        setShowPopup({
+                          show: true,
+                          type: "unlist",
+                          price: "",
+                          tokenAddress: "0x29njjs",
+                          tokenId: "1234",
+                        });
+                      }}
+                    >
+                      Unlist
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft2} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
-              </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft3} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
-              </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft4} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
-              </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft2} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
-              </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="nft-item">
-            <div className="product_image">
-              <img src={nft1} alt="" decoding="async" loading="lazy" />
-            </div>
-            <div className="product-content">
-              <p className="nft-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                impedit.
-              </p>
-              <div className="listing-price-parent">
-                <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 fdai</span>
-              </div>
-              <div className="listing-buttons">
-                <button
-                  className="listing-edit-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "edit",
-                      price: 0.001,
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="listing-cancle-button"
-                  onClick={() => {
-                    setShowPopup({
-                      show: true,
-                      type: "unlist",
-                      price: "",
-                      tokenAddress: "0x29njjs",
-                      tokenId: "1234",
-                    });
-                  }}
-                >
-                  Unlist
-                </button>
-              </div>
-            </div>
-          </div>
+            ))}
         </div>
       </section>
       {showPopup.show ? (
