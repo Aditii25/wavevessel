@@ -30,7 +30,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button
@@ -75,7 +75,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button
@@ -120,7 +120,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button
@@ -165,7 +165,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button
@@ -210,7 +210,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button
@@ -255,7 +255,7 @@ function ProfileListedNfts() {
               </p>
               <div className="listing-price-parent">
                 <span className="listing-price-title">Listing Price</span>
-                <span className="listing-price-value">0.003 ETH</span>
+                <span className="listing-price-value">0.003 fdai</span>
               </div>
               <div className="listing-buttons">
                 <button

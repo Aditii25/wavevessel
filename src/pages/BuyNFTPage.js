@@ -146,7 +146,7 @@ function BuyNFTPage() {
                 <h1 className="nft-cost-main">
                   0.001
                   <span title="Base NFT cost" className="nft-cost-price">
-                    ETH
+                    fdai
                   </span>
                 </h1>
               </div>

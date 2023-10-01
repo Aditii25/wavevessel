@@ -30,13 +30,13 @@ function ProfilePurchasedNfts() {
                 </div>
                 <div className="product-content-sections">
                   <p className="title">Price</p>
-                  <p className="value">0.01 ETH</p>
+                  <p className="value">0.01 fdai</p>
                 </div>
               </div>
               <div className="product-content ">
                 <div className="product-content-sections">
                   <p className="title">Flow Rate</p>
-                  <p className="value">0.0001 ETH/Sec</p>
+                  <p className="value">0.0001 fdaix/Sec</p>
                 </div>
                 <div className="product-content-sections">
                   <p className="title">Start Date</p>
@@ -80,13 +80,13 @@ function ProfilePurchasedNfts() {
                 </div>
                 <div className="product-content-sections">
                   <p className="title">Price</p>
-                  <p className="value">0.01 ETH</p>
+                  <p className="value">0.01 fdai</p>
                 </div>
               </div>
               <div className="product-content ">
                 <div className="product-content-sections">
                   <p className="title">Flow Rate</p>
-                  <p className="value">0.0001 ETH/Sec</p>
+                  <p className="value">0.0001 fdaix/Sec</p>
                 </div>
                 <div className="product-content-sections">
                   <p className="title">Start Date</p>
@@ -140,7 +140,7 @@ function ProfilePurchasedNfts() {
               <div className="product-content ">
                 <div className="product-content-sections">
                   <p className="title">Flow Rate</p>
-                  <p className="value">0.0001 ETH/Sec</p>
+                  <p className="value">0.0001 fdaix/Sec</p>
                 </div>
                 <div className="product-content-sections">
                   <p className="title">Start Date</p>
