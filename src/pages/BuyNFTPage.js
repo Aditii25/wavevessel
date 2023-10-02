@@ -45,7 +45,7 @@ function BuyNFTPage() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        console.log(signer);
+
         const sf = await Framework.create({
           chainId: 8453,
           provider: provider,
@@ -53,13 +53,23 @@ function BuyNFTPage() {
 
         const daix = await sf.loadSuperToken("DAIx");
 
-        console.log(daix);
         const contract = new ethers.Contract(
           contractAddress,
           contractAbi.abi,
           signer
         );
-
+        const aclApproval = daix.updateFlowOperatorPermissions({
+          flowOperator: contractAddress,
+          flowRateAllowance: "3858024691358024", //10k tokens per month in flowRateAllowanace
+          permissions: 7, //NOTE: this allows for full create, update, and delete permissions. Change this if you want more granular permissioning
+        });
+        await aclApproval.exec(signer).then(async function (tx) {
+          await tx.wait();
+          console.log(`
+            Congrats! You've just successfully made the money router contract a flow operator.
+            Tx Hash: ${tx.hash}
+        `);
+        });
         const ethAmount = flowRate; // Replace this with the amount of Ether you want to convert
 
         // Convert ETH to Wei
@@ -75,27 +85,17 @@ function BuyNFTPage() {
           signer
         );
 
-        // const approve = erc20Contract.approve(
-        //   contractAddress,
-        //   "1000000000000000000"
-        // );
-        // console.log(approve);
-        console.log(
-          contract,
-          nft[0].nftOwner,
-          nft[0].contract,
-          nft[0].identifier,
-          parseInt(weiAmount),
-          parseInt(weiAmount),
-          erc20ContractAddress,
-          daix.address
+        const approve = erc20Contract.approve(
+          contractAddress,
+          "1000000000000000000"
         );
+
         const tx = await contract.BuyNFTOverTime(
           nft[0].nftOwner,
           nft[0].contract,
           nft[0].identifier,
-          weiAmount,
-          weiAmount,
+          100000,
+          100000,
           erc20ContractAddress,
           daix.address
         );

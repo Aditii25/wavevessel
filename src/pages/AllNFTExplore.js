@@ -117,7 +117,7 @@ function AllNFTExplore() {
           <div className="explore-nfts">
             {listingNFTs.length > 0 &&
               listingNFTs.map((nft) => (
-                <div className="nft-item" key={nft[0].identifier}>
+                <div className="nft-item" key={nft[0] && nft[0].identifier}>
                   <Link
                     className="product_image"
                     to="/shop/product"
@@ -126,7 +126,7 @@ function AllNFTExplore() {
                     }}
                   >
                     <img
-                      src={nft[0].image_url ? nft[0].image_url : nft1}
+                      src={nft[0] && nft[0].image_url ? nft[0].image_url : nft1}
                       alt=""
                       decoding="async"
                       loading="lazy"
@@ -134,14 +134,16 @@ function AllNFTExplore() {
                   </Link>
                   <div className="product-content">
                     <p className="nft-title">
-                      {nft[0].name
+                      {nft[0] && nft[0].name
                         ? nft[0].name
-                        : "the-amazing-game #" + nft[0].identifier}
+                        : "the-amazing-game #" + nft[0]
+                        ? nft[0] && nft[0].identifier
+                        : null}
                     </p>
                     <div className="listing-price-parent">
                       <span className="listing-price-title">Listing Price</span>
                       <span className="listing-price-value">
-                        {nft[0].price} Dai
+                        {nft[0] ? nft[0].price : 0} Dai
                       </span>
                     </div>
                     <div className="explore-buy">
