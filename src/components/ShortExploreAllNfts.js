@@ -93,48 +93,52 @@ function ShortExploreAllNfts() {
           </div>
           <div className="explore-nfts">
             {listingNFTs.length > 0 &&
-              listingNFTs.map((nft) => (
-                <div className="nft-item">
-                  <Link
-                    className="product_image"
-                    to="/shop/product"
-                    state={{
-                      nft_image: nft[0].image_url ? nft[0].image_url : nft1,
-                    }}
-                  >
-                    <img
-                      src={nft[0].image_url ? nft[0].image_url : nft1}
-                      alt=""
-                      decoding="async"
-                      loading="lazy"
-                    />
-                  </Link>
-                  <div className="product-content">
-                    <p className="nft-title">
-                      {nft[0].name
-                        ? nft[0].name
-                        : "the-amazing-game #" + nft[0].identifier}
-                    </p>
-                    <div className="listing-price-parent">
-                      <span className="listing-price-title">Listing Price</span>
-                      <span className="listing-price-value">
-                        {nft[0].price} Dai
-                      </span>
-                    </div>
-                    <div className="explore-buy">
-                      <Link
-                        className="explore-buy-button"
-                        to="/shop/product"
-                        state={{
-                          nft_image: nft.image_url ? nft.image_url : nft1,
-                        }}
-                      >
-                        Buy Now
-                      </Link>
+              listingNFTs
+                .filter((nft) => nft[0] && nft[0].price)
+                .map((nft) => (
+                  <div className="nft-item" key={nft[0].identifier}>
+                    <Link
+                      className="product_image"
+                      to="/shop/product"
+                      state={{
+                        nft: nft,
+                      }}
+                    >
+                      <img
+                        src={nft[0].image_url ? nft[0].image_url : nft1}
+                        alt=""
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </Link>
+                    <div className="product-content">
+                      <p className="nft-title">
+                        {nft[0].name
+                          ? nft[0].name
+                          : "the-amazing-game #" + nft[0].identifier}
+                      </p>
+                      <div className="listing-price-parent">
+                        <span className="listing-price-title">
+                          Listing Price
+                        </span>
+                        <span className="listing-price-value">
+                          {nft[0] ? nft[0].price : 0} Dai
+                        </span>
+                      </div>
+                      <div className="explore-buy">
+                        <Link
+                          className="explore-buy-button"
+                          to="/shop/product"
+                          state={{
+                            nft: nft,
+                          }}
+                        >
+                          Buy Now
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>{" "}
           <div class="products__footer">
             <Link

@@ -199,7 +199,7 @@ function ProfilePurchasedNfts() {
                     <div>
                       <span className="value progress-title">Status :- </span>
                       <span className="value progress-title active">
-                        Active
+                        Pending Amount (Active)
                       </span>
                     </div>
                     <div className="wallet_parent">
